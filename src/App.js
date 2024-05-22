@@ -8,6 +8,7 @@ import ReactFlow, {
   useEdgesState,
 } from "reactflow";
 import "reactflow/dist/style.css";
+import NodesPanel from "./components/NodesPanel";
 import "./App.css";
 
 const initialNodes = [
@@ -35,7 +36,17 @@ function App() {
   );
 
   const onNodeDragStop = (event, node) =>
-    setNodes((nds) => nds.map((n) => (n.id === node.id ? node : n)))
+    setNodes((nds) => nds.map((n) => (n.id === node.id ? node : n)));
+
+  const addNode = (type) => {
+    const newNode = {
+      id: getId(),
+      type: "default",
+      position: { x: Math.random() * 200, y: Math.random() * 200 },
+      data: { label: `${type} ${id}` },
+    };
+    setNodes((nds) => nds.concat(newNode));
+  };
 
   const onNodesDelete = (selectedNodes) => {
     const newNodes = nodes.filter((node) => !selectedNodes.includes(node.id));
@@ -76,6 +87,7 @@ function App() {
       </div>
       <div className="flow-builder">
         <ReactFlowProvider>
+          <NodesPanel onAddNode={addNode} />
           <ReactFlow
             nodes={nodes}
             edges={edges}
