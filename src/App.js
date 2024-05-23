@@ -9,6 +9,7 @@ import ReactFlow, {
 } from "reactflow";
 import "reactflow/dist/style.css";
 import NodesPanel from "./components/NodesPanel";
+import Topbar from "./components/Topbar";
 import "./App.css";
 
 const initialNodes = [
@@ -29,6 +30,7 @@ function App() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [selectedNode, setSelectedNode] = useState(null);
+  const [reactFlowInstance, setReactFlowInstance] = useState(null);
 
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
@@ -37,16 +39,6 @@ function App() {
 
   const onNodeDragStop = (event, node) =>
     setNodes((nds) => nds.map((n) => (n.id === node.id ? node : n)));
-
-  const addNode = (type) => {
-    const newNode = {
-      id: getId(),
-      type: "default",
-      position: { x: Math.random() * 200, y: Math.random() * 200 },
-      data: { label: `${type} ${id}` },
-    };
-    setNodes((nds) => nds.concat(newNode));
-  };
 
   const onNodesDelete = (selectedNodes) => {
     const newNodes = nodes.filter((node) => !selectedNodes.includes(node.id));
@@ -60,34 +52,49 @@ function App() {
     setSelectedNode(null);
   };
 
+  const handleSave = useCallback(() => {
+    const nodesWithoutTarget = nodes.filter(
+      (node) => !edges.find((edge) => edge.source === node.id)
+    );
+    if (nodesWithoutTarget.length > 1) {
+      alert("More than one node with empty target handles");
+    } else {
+      // Save logic here
+      console.log("Flow saved");
+    }
+  }, []);
+
+  const onDragOver = (event) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  };
+
+  const onDrop = (event) => {
+    event.preventDefault();
+    const type = event.dataTransfer.getData("application/reactflow");
+    // check if the dropped element is valid
+    if (typeof type === "undefined" || !type) {
+      return;
+    }
+    const position = reactFlowInstance.screenToFlowPosition({
+      x: event.clientX,
+      y: event.clientY,
+    });
+    const newNode = {
+      id: getId(),
+      type,
+      position,
+      data: { label: `test message ${nodes?.length}` },
+    };
+
+    setNodes((nds) => nds.concat(newNode));
+  };
+
   return (
     <div className="App">
-      <div className="header">
-        <div>
-          <h1>React Flow</h1>
-        </div>
-        <div className="save-btn-container">
-          <button
-            className="btn"
-            onClick={() => {
-              const nodesWithoutTarget = nodes.filter(
-                (node) => !edges.find((edge) => edge.source === node.id)
-              );
-              if (nodesWithoutTarget.length > 1) {
-                alert("More than one node with empty target handles");
-              } else {
-                // Save logic here
-                console.log("Flow saved");
-              }
-            }}
-          >
-            Save
-          </button>
-        </div>
-      </div>
+      <Topbar handleSave={handleSave} />
       <div className="flow-builder">
         <ReactFlowProvider>
-          <NodesPanel onAddNode={addNode} />
           <ReactFlow
             nodes={nodes}
             edges={edges}
@@ -98,28 +105,15 @@ function App() {
             onNodeDragStop={onNodeDragStop}
             onNodeClick={(event, node) => setSelectedNode(node)}
             onNodesDelete={onNodesDelete}
+            onInit={setReactFlowInstance}
+            onDrop={onDrop}
+            onDragOver={onDragOver}
+            style={{ width: "50%", height: "90vh" }}
           >
             <Controls />
             <Background />
           </ReactFlow>
-          {selectedNode && (
-            <div className="settings-panel">
-              <h3>Settings Panel</h3>
-              <input
-                type="text"
-                value={selectedNode.data.label}
-                onChange={(e) => {
-                  setNodes((nds) =>
-                    nds.map((n) =>
-                      n.id === selectedNode.id
-                        ? { ...n, data: { ...n.data, label: e.target.value } }
-                        : n
-                    )
-                  );
-                }}
-              />
-            </div>
-          )}
+          <NodesPanel />
         </ReactFlowProvider>
       </div>
     </div>
