@@ -1,4 +1,5 @@
 import React from "react";
+import "./index.css";
 
 const onDragStart = (event, nodeType) => {
   event.dataTransfer.setData("application/reactflow", nodeType);
@@ -7,7 +8,7 @@ const onDragStart = (event, nodeType) => {
 
 const NodesPanel = () => {
   return (
-    <div className="nodes-container">
+    <div className="msg-container">
       <aside className="nodes-panel">
         <div
           className="dndnode input"

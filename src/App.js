@@ -108,7 +108,6 @@ function App() {
             onInit={setReactFlowInstance}
             onDrop={onDrop}
             onDragOver={onDragOver}
-            style={{ width: "50%", height: "90vh" }}
           >
             <Controls />
             <Background />
