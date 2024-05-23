@@ -86,8 +86,24 @@ function App() {
       position,
       data: { label: `test message ${nodes?.length}` },
     };
-
     setNodes((nds) => nds.concat(newNode));
+  };
+
+  const handleUpdateNodeLabel = (nodeId, label) => {
+    const mappedNodes = nodes.map((node) => {
+      if (node.id === nodeId) {
+        return {
+          ...node,
+          data: {
+            ...node.data,
+            label,
+          },
+        };
+      }
+      return node;
+    });
+    setNodes(mappedNodes);
+    setSelectedNode(null);
   };
 
   return (
@@ -112,7 +128,11 @@ function App() {
             <Controls />
             <Background />
           </ReactFlow>
-          <NodesPanel />
+          <NodesPanel
+            selectedNode={selectedNode}
+            setSelectedNode={setSelectedNode}
+            handleUpdateNodeLabel={handleUpdateNodeLabel}
+          />
         </ReactFlowProvider>
       </div>
     </div>

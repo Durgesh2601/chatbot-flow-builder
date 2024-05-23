@@ -4,8 +4,24 @@
 }
 
 .flow-builder {
+  padding: 0 1.5rem;
   display: flex;
   height: 85vh;
-  width: 80%;
+  width: 98%;
   margin-top: 0.5rem;
+  margin: auto;
+}
+
+.btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.btn:hover {
+  background-color: #0056b3;
 }
