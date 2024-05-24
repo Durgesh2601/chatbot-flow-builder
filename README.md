@@ -48,8 +48,8 @@ The Chatbot Flow Builder is a web application designed to create and visualize c
 
 ## Project Structure
 
-- **src/components/NodesPanel.js**: Component for rendering the draggable nodes panel.
-- **src/components/CustomAlert.js**: Component for displaying custom alert messages.
+- **src/components/NodesPanel/index.js**: Component for rendering the draggable nodes panel.
+- **src/components/CustomAlert/index.js**: Component for displaying custom alert messages.
 - **src/App.js**: Root component of the application containing the main logic for the flow builder.
 - **src/index.js**: Entry point of the application.
 - **src/styles/App.css**: CSS styles for the main application components.
