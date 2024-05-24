@@ -1,70 +1,84 @@
-# Getting Started with Create React App
+Here's a README for the Chatbot Flow Builder assignment based on the provided template:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Chatbot Flow Builder
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+The Chatbot Flow Builder is a web application designed to create and visualize chatbot message flows. It allows users to add, connect, and configure different types of nodes (currently only text nodes) to define the order of chatbot message execution.
 
-### `npm start`
+### Deployed Link
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+[https://chatbot-flow-builder-psi-eight.vercel.app/](https://chatbot-flow-builder-psi-eight.vercel.app/)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Features
 
-### `npm test`
+- **Drag-and-Drop Node Addition**: Add nodes to the flow by dragging them from the nodes panel.
+- **Text Nodes**: Currently supports text message nodes.
+- **Connect Nodes**: Connect nodes using edges to define the message flow.
+- **Node Configuration**: Edit node text via a settings panel.
+- **Flow Validation**: Displays an error if more than one node has empty target handles when attempting to save.
+- **Custom Alert**: Custom alert for validation messages.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Tech Stack
 
-### `npm run build`
+- **React**: JavaScript library for building user interfaces.
+- **React Flow**: Library for building node-based graphs.
+- **CSS**: Styling the components to create an interactive and responsive design.
+- **Vercel**: Platform for deploying the application.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Installation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Clone the repository:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   ```bash
+   git clone https://github.com/Durgesh2601/chatbot-flow-builder.git
+   ```
 
-### `npm run eject`
+2. Install the dependencies:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+   ```bash
+   npm install
+   ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. Start the development server:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   ```bash
+   npm start
+   ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+4. Open your browser and navigate to `http://localhost:3000` to view the application.
 
-## Learn More
+## Project Structure
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **src/components/NodesPanel.js**: Component for rendering the draggable nodes panel.
+- **src/components/CustomAlert.js**: Component for displaying custom alert messages.
+- **src/App.js**: Root component of the application containing the main logic for the flow builder.
+- **src/index.js**: Entry point of the application.
+- **src/styles/App.css**: CSS styles for the main application components.
+- **src/styles/CustomAlert.css**: CSS styles for the custom alert component.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Usage
 
-### Code Splitting
+1. **Nodes Panel**: The left sidebar where users can drag nodes into the React Flow area.
+2. **React Flow Area**: The main area where nodes are placed, connected, and configured.
+3. **Settings Panel**: Appears when a node is selected, allowing users to edit the node's text.
+4. **Save Button**: Validates the flow and saves it, showing a custom alert if validation fails.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Development
 
-### Analyzing the Bundle Size
+- **React Components**: The application is structured using functional components.
+- **State Management**: `useState` and `useCallback` hooks are used to manage state and event handling.
+- **Drag-and-Drop**: Implemented using HTML5 Drag and Drop API.
+- **Validation**: Custom validation logic to ensure proper flow connections before saving.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Deployment
 
-### Making a Progressive Web App
+The application is deployed on Vercel. You can access it via the following link:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+[https://chatbot-flow-builder-psi-eight.vercel.app/](https://chatbot-flow-builder-psi-eight.vercel.app/)
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+**Author**: Durgesh Kumar Singh
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Feel free to contact me at [dk829445@gmail.com](mailto:dk829445@gmail.com) for any questions or feedback.
