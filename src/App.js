@@ -11,6 +11,7 @@ import "reactflow/dist/style.css";
 import NodesPanel from "./components/NodesPanel";
 import Topbar from "./components/Topbar";
 import "./App.css";
+import CustomAlert from "./components/CustomAlert";
 
 const initialNodes = [
   {
@@ -31,6 +32,7 @@ function App() {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [selectedNode, setSelectedNode] = useState(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
+  const [alertMessage, setAlertMessage] = useState("");
 
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
@@ -57,12 +59,14 @@ function App() {
       (node) => !edges.find((edge) => edge.source === node.id)
     );
     if (nodesWithoutTarget.length > 1) {
-      alert("More than one node with empty target handles");
+      setAlertMessage(
+        "Cannot save flow! More than one node with empty target handles"
+      );
     } else {
-      // Save logic here
+      setAlertMessage("Flow saved successfully!");
       console.log("Flow saved");
     }
-  }, []);
+  }, [nodes]);
 
   const onDragOver = (event) => {
     event.preventDefault();
@@ -84,9 +88,9 @@ function App() {
       id: getId(),
       type,
       position,
-      data: { label: `test message ${nodes?.length}` },
+      data: { label: `test message ${getId() - 1}` },
     };
-    setNodes((nds) => nds.concat(newNode));
+    setNodes((prevNodes) => prevNodes.concat(newNode));
   };
 
   const handleUpdateNodeLabel = (nodeId, label) => {
@@ -104,6 +108,10 @@ function App() {
     });
     setNodes(mappedNodes);
     setSelectedNode(null);
+  };
+
+  const closeAlert = () => {
+    setAlertMessage("");
   };
 
   return (
@@ -133,6 +141,9 @@ function App() {
             setSelectedNode={setSelectedNode}
             handleUpdateNodeLabel={handleUpdateNodeLabel}
           />
+          {alertMessage && (
+            <CustomAlert message={alertMessage} onClose={closeAlert} />
+          )}
         </ReactFlowProvider>
       </div>
     </div>
