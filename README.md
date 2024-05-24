@@ -1,5 +1,3 @@
-Here's a README for the Chatbot Flow Builder assignment based on the provided template:
-
 # Chatbot Flow Builder
 
 ## Overview
