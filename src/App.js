@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import ReactFlow, {
   ReactFlowProvider,
   addEdge,
@@ -12,13 +12,11 @@ import NodesPanel from "./components/NodesPanel";
 import Topbar from "./components/Topbar";
 import "./App.css";
 import CustomAlert from "./components/CustomAlert";
-import CustomTextNode from "./components/CustomNodeRenderer";
+import nodeTypes, { nodeTypeOptions } from "./config/nodeTypes"; // Import node types and options
 import { initialNodes } from "./constants";
 import { getId } from "./utils";
 
 const initialEdges = [];
-
-const nodeTypes = { textNode: CustomTextNode };
 
 function App() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
@@ -68,7 +66,7 @@ function App() {
       id,
       type,
       position,
-      data: { label: `test message ${id}` },
+      data: { label: `${type} Node ${id}` },
     };
     setNodes((prevNodes) => prevNodes.concat(newNode));
   };

@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import { Handle, Position } from "reactflow";
 import { FaWhatsapp, FaCommentDots } from "react-icons/fa";
 import "./index.css";

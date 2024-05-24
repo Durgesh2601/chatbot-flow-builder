@@ -16,6 +16,7 @@ The Chatbot Flow Builder is a web application designed to create and visualize c
 - **Node Configuration**: Edit node text via a settings panel.
 - **Flow Validation**: Displays an error if more than one node has empty target handles when attempting to save.
 - **Custom Alert**: Custom alert for validation messages.
+- **Extensible Node Types**: Easily add new types of nodes by updating the configuration file.
 
 ## Tech Stack
 
@@ -50,6 +51,7 @@ The Chatbot Flow Builder is a web application designed to create and visualize c
 
 - **src/components/NodesPanel/index.js**: Component for rendering the draggable nodes panel.
 - **src/components/CustomAlert/index.js**: Component for displaying custom alert messages.
+- **src/config/nodeTypes.js**: Configuration file for defining different node types.
 - **src/App.js**: Root component of the application containing the main logic for the flow builder.
 - **src/index.js**: Entry point of the application.
 - **src/styles/App.css**: CSS styles for the main application components.
@@ -68,6 +70,32 @@ The Chatbot Flow Builder is a web application designed to create and visualize c
 - **State Management**: `useState` and `useCallback` hooks are used to manage state and event handling.
 - **Drag-and-Drop**: Implemented using HTML5 Drag and Drop API.
 - **Validation**: Custom validation logic to ensure proper flow connections before saving.
+- **Extensible Node Types**: Easily add new types of nodes by updating the configuration in `src/config/nodeTypes.js`.
+
+### Extending Node Types
+
+To add new types of nodes, you can update the `src/config/nodeTypes.js` file. This makes the node panel extensible for future node types.
+
+Example `src/config/nodeTypes.js`:
+
+```javascript
+// src/config/nodeTypes.js
+import CustomTextNode from '../components/CustomTextNode';
+// Future node components can be added here
+// import CustomImageNode from '../components/CustomImageNode';
+
+const nodeTypes = {
+  textNode: CustomTextNode,
+  // imageNode: CustomImageNode, // Example of another node type
+};
+
+export const nodeTypeOptions = [
+  { type: 'textNode', label: 'Text Node' },
+  // { type: 'imageNode', label: 'Image Node' }, // Example of another node type
+];
+
+export default nodeTypes;
+```
 
 ## Deployment
 
