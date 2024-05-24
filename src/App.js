@@ -66,7 +66,7 @@ function App() {
       id,
       type,
       position,
-      data: { label: `${type} Node ${id}` },
+      data: { label: `${type} ${id}` },
     };
     setNodes((prevNodes) => prevNodes.concat(newNode));
   };
