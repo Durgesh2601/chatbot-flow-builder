@@ -12,20 +12,13 @@ import NodesPanel from "./components/NodesPanel";
 import Topbar from "./components/Topbar";
 import "./App.css";
 import CustomAlert from "./components/CustomAlert";
-
-const initialNodes = [
-  {
-    id: "1",
-    type: "default",
-    position: { x: 100, y: 100 },
-    data: { label: "test message 1" },
-  },
-];
+import CustomTextNode from "./components/CustomNodeRenderer";
+import { initialNodes } from "./constants";
+import { getId } from "./utils";
 
 const initialEdges = [];
 
-let id = 2;
-const getId = () => `${id++}`;
+const nodeTypes = { textNode: CustomTextNode };
 
 function App() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
@@ -54,20 +47,6 @@ function App() {
     setSelectedNode(null);
   };
 
-  const handleSave = useCallback(() => {
-    const nodesWithoutTarget = nodes.filter(
-      (node) => !edges.find((edge) => edge.source === node.id)
-    );
-    if (nodesWithoutTarget.length > 1) {
-      setAlertMessage(
-        "Cannot save flow! More than one node with empty target handles"
-      );
-    } else {
-      setAlertMessage("Flow saved successfully!");
-      console.log("Flow saved");
-    }
-  }, [nodes]);
-
   const onDragOver = (event) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
@@ -84,11 +63,12 @@ function App() {
       x: event.clientX,
       y: event.clientY,
     });
+    const id = getId(nodes);
     const newNode = {
-      id: getId(),
+      id,
       type,
       position,
-      data: { label: `test message ${getId() - 1}` },
+      data: { label: `test message ${id}` },
     };
     setNodes((prevNodes) => prevNodes.concat(newNode));
   };
@@ -114,6 +94,20 @@ function App() {
     setAlertMessage("");
   };
 
+  const handleSave = useCallback(() => {
+    const nodesWithoutTarget = nodes.filter(
+      (node) => !edges.find((edge) => edge.source === node.id)
+    );
+    if (nodesWithoutTarget.length > 1) {
+      setAlertMessage(
+        "Cannot save flow! More than one node with empty target handles"
+      );
+    } else {
+      setAlertMessage("Flow saved successfully!");
+      console.log("Flow saved");
+    }
+  }, [nodes]);
+
   return (
     <div className="App">
       <Topbar handleSave={handleSave} />
@@ -132,6 +126,7 @@ function App() {
             onInit={setReactFlowInstance}
             onDrop={onDrop}
             onDragOver={onDragOver}
+            nodeTypes={nodeTypes}
           >
             <Controls />
             <Background />
